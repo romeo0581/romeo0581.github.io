@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutor Shop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --accent: #10b981;
+      --bg: linear-gradient(to right, #f0f4ff, #e0f7fa);
+      --text: #1f2937;
+      --glass: rgba(255, 255, 255, 0.8);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: all 0.3s ease;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header {
+      background: linear-gradient(to right, #6366f1, #4f46e5);
+      color: white;
+      padding: 30px 40px;
+      text-align: center;
+      font-size: 36px;
+      font-weight: 700;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      background: #e0e7ff;
+      padding: 15px;
+      flex-wrap: wrap;
+    }
+    nav button {
+      background: white;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 10px 18px;
+      font-weight: bold;
+      font-size: 14px;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+    nav button:hover {
+      background: var(--primary);
+      color: white;
+      transform: scale(1.05);
+    }
+    main {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      padding: 40px;
+      justify-content: center;
+    }
+    .product-card {
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      width: 260px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .product-card:hover {
+      transform: scale(1.03);
+    }
+    .product-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+    .product-card h3 {
+      margin: 0 0 10px;
+      font-weight: 600;
+    }
+    .product-card .category {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+    .product-card input {
+      width: 100%;
+      padding: 8px;
+      margin: 10px 0;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+    }
+    .product-card button {
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .product-card button:hover {
+      background-color: #059669;
+      transform: scale(1.02);
+    }
+    .cart-section {
+      width: 90%;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 25px;
+      background-color: #ffffffee;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    .cart-item {
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 16px;
+    }
+    .checkout {
+      text-align: right;
+      margin-top: 20px;
+    }
+    .checkout button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    .checkout button:hover {
+      background-color: #4f46e5;
+      transform: scale(1.05);
+    }
+    .success-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      background: var(--bg);
+      padding: 20px;
+    }
+    .success-page h1 {
+      color: var(--accent);
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    .success-page p {
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
+    .success-page button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .success-page button:hover {
+      background: #4f46e5;
+      transform: scale(1.05);
+    }
+    #pagination {
+      text-align: center;
+      margin: 20px 0;
+    }
+    #pagination button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    #pagination button:disabled {
+      background-color: #a5b4fc;
+      cursor: not-allowed;
+    }
+    #pagination span {
+      font-size: 18px;
+      margin: 0 10px;
+    }
+    @media (max-width: 600px) {
+      main {
+        padding: 20px 10px;
+      }
+      .product-card {
+        width: 100%;
+      }
+    }
+    /* Login Modal */
+    .login-modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .login-box {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      text-align: center;
+      width: 300px;
+    }
+    .login-box h2 {
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+    .login-box input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+    }
+    .login-box button {
+      width: 100%;
+      background: var(--accent);
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .login-box button:hover {
+      background: #059669;
+    }
+  </style>
+</head>
+<body>
+
+<div id="loginModal" class="login-modal">
+  <div class="login-box">
+    <h2>เข้าสู่ระบบ</h2>
+    <input type="text" id="username" placeholder="ชื่อผู้ใช้">
+    <input type="password" id="password" placeholder="รหัสผ่าน">
+    <button onclick="login()">เข้าสู่ระบบ</button>
+  </div>
+</div>
+
+<header>MY COMPUTER STORE 🛍️</header>
+
+<nav>
+  <button onclick="filterCategory('all')">ทั้งหมด</button>
+  <button onclick="filterCategory('CPU')">CPU</button>
+  <button onclick="filterCategory('GRAPHIC CARD')">GRAPHIC CARD</button>
+  <button onclick="filterCategory('M.2')">M.2</button>
+  <button onclick="filterCategory('POWER SUPPLY')">POWER SUPPLY</button>
+  <button onclick="filterCategory('CASE')">CASE</button>
+  <button onclick="filterCategory('Liquid cooling')">Liquid cooling</button>
+  <button onclick="filterCategory('MONITOR')">MONITOR</button>
+</nav>
+
+<main id="product-list"></main>
+
+<div id="pagination"></div>
+
+<section class="cart-section" id="cart-section">
+  <h2>🧺 ตะกร้าสินค้า</h2>
+  <div id="cart-list"></div>
+  <p id="total">รวม: 0.00 บาท</p>
+  <div class="checkout">
+    <button onclick="checkout()">ชำระเงิน</button>
+  </div>
+</section>
+
+<script>
+const users = [
+  { username: 'admin', password: '1234' },
+  { username: 'user', password: '5678' }
+];
+
+function login() {
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const found = users.find(u => u.username === username && u.password === password);
+  if (found) {
+    document.getElementById('loginModal').style.display = 'none';
+  } else {
+    alert('❌ ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+  }
+}
+
+const products = [
+  { id: 1, name: "CORE I3-12100F", category: "CPU", price: 2290, image: "https://ihcupload.s3.ap-southeast-1.amazonaws.com/img/product/products88910_800.jpg" },
+  { id: 2, name: "CORE I5-14400F", category: "CPU", price: 5690, image: "https://ihcupload.s3.ap-southeast-1.amazonaws.com/img/product/product30253_800.jpg" },
+  { id: 3, name: "CORE I7-14700k", category: "CPU", price: 12090, image: "https://storage.googleapis.com/file-computeandmore/large_images/e67762e2-a6bb-4c85-a5a7-6b72b67efed2.webp" },
+  { id: 4, name: "CORE I9-14900k", category: "CPU", price: 24590, image: "https://www.jib.co.th/img_master/product/original/2023101615262063040_1.png" },
+  { id: 5, name: "CORE ULTRA9 285k", category: "CPU", price: 52690, image: "https://media-cdn.bnn.in.th/437604/intel-core-ultra9-285k-1.jpg" },
+  { id: 6, name: "RTX 4060ti", category: "GRAPHIC CARD", price: 15690, image: "https://media-cdn.bnn.in.th/324681/asus-rog-strix-rtx4060ti-o16g-gaming-10-square_medium.jpg" },
+  { id: 7, name: "RTX 5060", category: "GRAPHIC CARD", price: 16890, image: "https://img.advice.co.th/images_nas/pic_product4/A0168698/A0168698OK_BIG_1.jpg" },
+  { id: 8, name: "RTX 5070", category: "GRAPHIC CARD", price: 26590, image: "https://lh4.googleusercontent.com/proxy/aEb_lbxEQJhqn19A2SRiqq8fVQJtiKp7WIAV5ZKAUgp76gRvIeyq4oQZd7_EWNTB92Kanew2YOmTiRrdxgN-LdZaZ1SwHgV9JBfx0tXG6Eig7kEN5YmLpBsvKMuFsEcESgCe1qKg" },
+  { id: 9, name: "RTX 5080", category: "GRAPHIC CARD", price: 43290, image: "https://img.advice.co.th/images_nas/pic_product4/A0168088/A0168088OK_BIG_1.jpg" },
+  { id: 10, name: "RTX 5090", category: "GRAPHIC CARD", price: 156890, image: "https://asset.msi.com/resize/image/global/product/product_1737437813d66adfb6f83cc1142228694088fe9c9c.png62405b38c58fe0f07fcef2367d8a9ba1/1024.png" },
+  { id: 11, name: "WD BLACK 1 TB", category: "M.2", price: 2250, image: "https://www.jib.co.th/img_master/product/original/2022051313111253212_1.jpg" },
+  { id: 12, name: "KINGTON 1 TB", category: "M.2", price: 2420, image: "https://www.jib.co.th/img_master/product/original/2022101509081955789_1.jpg" },
+  { id: 13, name: "AORUS 2 TB", category: "M.2", price: 4390, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxmgeTxExH6quNS72Us6D71lk-cjtluUzS1w&s" },
+  { id: 14, name: "LEXER 3 TB", category: "M.2", price: 6500, image: "https://media-cdn.bnn.in.th/378936/lexar-ssd-lnm710-m2-pcie4x4-1-square_medium.jpg" },
+  { id: 15, name: "PNY 3 TB", category: "M.2", price: 12350, image: "https://storage.googleapis.com/file-computeandmore/images/b2e7bcf5-d198-48b3-b292-e8c696754489.jpg" },
+  { id: 16, name: "AEROCOOL UNITED POWER 600W", category: "POWER SUPPLY", price: 1560, image: "https://ihcupload.s3.ap-southeast-1.amazonaws.com/img/product/product9619_800.jpg" },
+  { id: 17, name: "GIGABYTE GP-P550SS 550W", category: "POWER SUPPLY", price: 1670, image: "https://ihcupload.s3.ap-southeast-1.amazonaws.com/img/product/products50833_800.jpg" },
+  { id: 18, name: "AZZA PSAZ 750W", category: "POWER SUPPLY", price: 2560, image: "https://ihcupload.s3.ap-southeast-1.amazonaws.com/img/product/products77676_150.jpg" },
+  { id: 19, name: "ASUS ROG LOKI 1200W", category: "POWER SUPPLY", price: 8590, image: "https://ihcupload.s3.ap-southeast-1.amazonaws.com/img/product/products65014_800.jpg" },
+  { id: 20, name: "CORSAIR SF850-850W", category: "POWER SUPPLY", price: 3400, image: "https://www.jib.co.th/img_master/product/original/2024100213575071063_1.jpg" },
+  { id: 21, name: "Hyte 40 Black", category: "CASE", price: 4880, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0RBALRznF3MI3lsjbYqYB3NH9SJC9xuqHRA&s" },
+  { id: 22, name: "THERMALTAKE THE TOWER 600", category: "CASE", price: 5670, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-ja8yxqU0memnOJOaTjrpmUHVSQToQQXm4Q&s" },
+  { id: 23, name: "ANTEC TORQUE (BLACK & RED)", category: "CASE", price: 12050, image: "https://notebookspec.com/storage/pc-case/case_1129_20210204-123840_1.png" },
+  { id: 24, name: "COOLER MASTER SNEAKER", category: "CASE", price: 5470, image: "https://www.jib.co.th/img_master/product/original/2023111613522163675_1.jpg" }, 
+{ id: 25, name: "COUGAR FV270 RGB", category: "CASE", price: 4790, image: "https://testingback.avtech.uz/storage/products/22172/JhOOM1swRDWHRoaKk4X1-large_default.jpg" }, 
+{ id: 26, name: "ASUS ROG RYUJIN III 360 ARGB", category: "Liquid cooling", price: 13500, image: "https://www.autonetpc.com/wp-content/uploads/2024/10/4-18.png" }, 
+{ id: 27, name: "GIGABYTE AORUS WATERFORCE", category: "Liquid cooling", price: 11600, image: "https://static.gigabyte.com/StaticFile/Image/Global/7b41db08ae12197a1ee4efb290be9287/Product/31452/Png" }, 
+{ id: 28, name: "CORSAIR iCUE LINK TITAN 360", category: "Liquid cooling", price: 5610, image: "https://www.jib.co.th/img_master/product/original/2024092617011470906_1.jpg" }, 
+{ id: 29, name: "CORSAIR NAUTILUS 360 RS ARGB", category: "Liquid cooling", price: 3890, image: "https://www.jib.co.th/img_master/product/original/2024112815572772490_1.jpg" }, 
+{ id: 30, name: "THERMALRIGHT TR-FROZEN INFINITY 360", category: "Liquid cooling", price: 6590, image: "https://ihcupload.s3.ap-southeast-1.amazonaws.com/img/product/products91955_800.jpg" }, 
+{ id: 31, name: "MSI 2k 240Hz", category: "MONITOR", price: 12090, image: "https://media-cdn.bnn.in.th/354952/msi-g27qpx-ips-2k-240hz-1-square_medium.jpg" }, 
+{ id: 32, name: "ZOWIE 4k 360Hz", category: "MONITOR", price: 40250, image: "https://welltechgroup.co.th/wp-content/uploads/2023/08/01-77.png" }, 
+{ id: 33, name: "Acer 165Hz", category: "MONITOR", price: 4800, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnB_IcUTFavDPm21MHTNAn-ogKRELSWcn5bw&s" }, 
+{ id: 34, name: "ASUS ROG 560Hz", category: "MONITOR", price: 25000, image: "https://www.jib.co.th/img_master/product/original/20230221114006_57943_352_1.jpg" }, 
+{ id: 35, name: "LG 144Hz", category: "MONITOR", price: 2700, image: "https://media-cdn.bnn.in.th/75684/LG-MONITOR-24GN600-B-IPS-1ms-144Hz-HDR-1-square_medium.jpg" }
+
+];
+
+const cart = [];
+let currentCategory = 'all';
+let currentPage = 1;
+const itemsPerPage = 12;
+
+function renderProducts() {
+  const list = document.getElementById('product-list');
+  list.innerHTML = '';
+  const filtered = currentCategory === 'all' ? products : products.filter(p => p.category === currentCategory);
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  if (currentPage > totalPages) currentPage = totalPages;
+  const start = (currentPage - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  const currentItems = filtered.slice(start, end);
+  currentItems.forEach(product => {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.innerHTML = `
+      <img src="${product.image}" alt="${product.name}">
+      <div>
+        <div class="category">${product.category}</div>
+        <h3>${product.name}</h3>
+        <p><strong>${product.price} บาท</strong></p>
+      </div>
+      <div>
+        <input type="number" id="qty-${product.id}" value="1" min="1">
+        <button onclick="addToCart(${product.id})">เพิ่มในตะกร้า</button>
+      </div>
+    `;
+    list.appendChild(card);
+  });
+  renderPagination(totalPages);
+}
+
+function renderPagination(totalPages) {
+  const paginationDiv = document.getElementById('pagination');
+  paginationDiv.innerHTML = `
+    <button id="prevBtn" onclick="prevPage()" ${currentPage === 1 ? 'disabled' : ''}>ย้อนกลับ</button>
+    <span>หน้า ${currentPage} จาก ${totalPages}</span>
+    <button id="nextBtn" onclick="nextPage()" ${currentPage === totalPages ? 'disabled' : ''}>ถัดไป</button>
+  `;
+}
+
+function nextPage() {
+  const filtered = currentCategory === 'all' ? products : products.filter(p => p.category === currentCategory);
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  if (currentPage < totalPages) {
+    currentPage++;
+    renderProducts();
+  }
+}
+
+function prevPage() {
+  if (currentPage > 1) {
+    currentPage--;
+    renderProducts();
+  }
+}
+
+function addToCart(id) {
+  const quantity = parseInt(document.getElementById(`qty-${id}`).value);
+  const product = products.find(p => p.id === id);
+  if (!quantity || quantity < 1) return;
+  const existing = cart.find(item => item.product.id === id);
+  if (existing) {
+    existing.quantity += quantity;
+  } else {
+    cart.push({ product, quantity });
+  }
+  renderCart();
+}
+
+function renderCart() {
+  const cartList = document.getElementById('cart-list');
+  const totalElem = document.getElementById('total');
+  cartList.innerHTML = '';
+  let total = 0;
+  cart.forEach(item => {
+    const subtotal = item.product.price * item.quantity;
+    total += subtotal;
+    const div = document.createElement('div');
+    div.className = 'cart-item';
+    div.innerHTML = `<strong>${item.product.name}</strong> x ${item.quantity} = ${subtotal.toFixed(2)} บาท`;
+    cartList.appendChild(div);
+  });
+  totalElem.textContent = `รวม: ${total.toFixed(2)} บาท`;
+}
+
+function checkout() {
+  if (cart.length === 0) {
+    alert("ตะกร้าสินค้าว่าง!");
+    return;
+  }
+  const total = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+  const payment = parseFloat(prompt(`รวมเป็นเงิน ${total.toFixed(2)} บาท กรุณากรอกจำนวนเงินที่ชำระ:`));
+  if (isNaN(payment)) {
+    alert("❌ รูปแบบข้อมูลไม่ถูกต้อง");
+    return;
+  }
+  if (payment >= total) {
+    showSuccessPage(total, payment);
+    cart.length = 0;
+    renderCart();
+  } else {
+    alert("❌ ยอดเงินไม่พอ กรุณาลองอีกครั้ง");
+  }
+}
+
+function showSuccessPage(total, payment) {
+  document.body.innerHTML = `
+    <div class="success-page">
+      <h1>✅ การชำระเงินสำเร็จ!</h1>
+      <p>ขอบคุณที่เลือกซื้อสินค้ากับ Tutor Shop 🛍️</p>
+      <p><strong>ยอดที่ชำระ:</strong> ${payment.toFixed(2)} บาท</p>
+      <p><strong>เงินทอน:</strong> ${(payment - total).toFixed(2)} บาท</p>
+      <button onclick="window.location.reload()">กลับไปที่หน้าหลัก</button>
+    </div>
+  `;
+}
+
+function filterCategory(category) {
+  currentCategory = category;
+  currentPage = 1;
+  renderProducts();
+}
+
+renderProducts();
+</script>
+
+</body>
+</html>
